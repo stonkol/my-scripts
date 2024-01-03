@@ -11,6 +11,7 @@ for file in "$input_dir"/*.png; do
     filename=$(basename "$file")
     output_file="$output_dir/${filename%.*}_scaled.png"
     pixelart-scaler "$file" "$output_file" --scale-factor $scale_factor
+done
 
 # After saving this file...
 # In the Terminal navigate to your script directory. 

@@ -17,3 +17,15 @@ Now, any file you place into the smart folder should trigger the AppleScript, wh
 
 > [!IMPORTANT] 
 > The effectiveness of this approach depends on the specific metadata you want to remove and the file types involved. Also, exiftool might not remove all types of metadata for all file formats. 
+
+### List of metadata types that exiftool can handle:
+1. EXIF Data (Exchangeable image file format): Camera settings (aperture, shutter speed, ISO, etc.). Date and time information. GPS coordinates. Camera make and model. Software used for processing the image.
+1. IPTC Data (International Press Telecommunications Council): Caption and description. Keywords. Object name. By-line (photographer's name).
+1. XMP Data (Extensible Metadata Platform): Extensible metadata in XML format. Often includes information similar to EXIF and IPTC.
+1. ICC Profiles (International Color Consortium): Color profiles associated with the image.
+1. Adobe APP14 Segment: Adobe-specific metadata often found in JPEG images.
+1. MakerNotes: Manufacturer-specific metadata embedded by the camera.
+1. QuickTime Data: Metadata in QuickTime files (MOV).
+1. PDF Metadata: Metadata embedded in PDF documents.
+1. PNG Textual Data: Textual information stored in PNG images.
+1. Other Formats: exiftool supports a wide range of file types, including various image formats (JPEG, PNG, TIFF, GIF, etc.), audio files, video files, PDFs, and more.

@@ -1,6 +1,11 @@
 # Metadata Removal (exiftool)
 1. Install exiftool `$ brew install exiftool`
-1. Create a new AppleScript Application [Exiftool-remove-metadata.scpt](https://github.com/stonkol/my-scripts/blob/main/Exiftool-remove-metadata.scpt)
+1. Create a new AppleScript Application
+   - In Script Editor paste this [Exiftool-remove-metadata.scpt](https://github.com/stonkol/my-scripts/blob/main/Exiftool-remove-metadata.scpt)
+   - Save as an Application
+      - Click on "File" in the menu bar > click "Export" or "Save As"
+      - Choose "Application" from the "File Format/Format" dropdown menu.
+      - Click "Save".
 1. Set Up a Smart Folder
    - Open Finder.
    - Click on "File" in the menu bar and select "New Smart Folder."

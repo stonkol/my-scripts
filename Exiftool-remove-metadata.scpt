@@ -1,5 +1,3 @@
--- brew install exiftool
-
 on run {input, parameters}
     repeat with fileAlias in input
         set posixPath to POSIX path of fileAlias

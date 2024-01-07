@@ -34,3 +34,7 @@ Now, any file you place into the smart folder should trigger the AppleScript, wh
 1. PDF Metadata: Metadata embedded in PDF documents.
 1. PNG Textual Data: Textual information stored in PNG images.
 1. Other Formats: exiftool supports a wide range of file types, including various image formats (JPEG, PNG, TIFF, GIF, etc.), audio files, video files, PDFs, and more.
+
+# Split Image
+
+Equally divide the image into 9 equally portions. Is at `split-image.py`.

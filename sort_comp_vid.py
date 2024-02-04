@@ -32,6 +32,18 @@ def compress_videos(source_dir, destination_dir):
 
     return compressed_videos_exist
 
+def remove_metadata_images(source_dir, delete_original=True):
+    # Remove metadata from images while preserving specific attributes
+    image_extensions = ['.jpg', '.jpeg', '.png']
+    for file_name in os.listdir(source_dir):
+        if any(file_name.lower().endswith(ext) for ext in image_extensions):
+            file_path = os.path.join(source_dir, file_name)
+            subprocess.run(["exiftool", "-all=", "-tagsFromFile", "@", "-exif:CreateDate", "-exif:ModifyDate", "-icc_profile", "-gps", "-filepermissions", "-rotation", file_path])
+
+            # Delete the original image if specified
+            if delete_original:
+                os.remove(file_path)
+
 def move_and_compress_videos(source_dir):
     # Set the destination and compressed directories
     destination_dir = os.path.join(source_dir, 'vids')
@@ -62,6 +74,10 @@ def move_and_compress_videos(source_dir):
         print("Some videos were already compressed in the 'comp vids' folder.")
     else:
         print("Videos compressed successfully.")
+
+    # Remove metadata from images and optionally delete the original images
+    remove_metadata_images(source_dir, delete_original=True)
+    print("Metadata removed from images and original images deleted successfully.")
 
 if __name__ == "__main__":
     source_directory = input("Enter the path of your folder: ")

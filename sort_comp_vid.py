@@ -15,7 +15,7 @@ def move_and_compress_videos(source_dir):
         os.makedirs(compressed_dir)
 
     # Move video files to the destination folder if not already there
-    video_extensions = ['.mov', '.mp4']
+    video_extensions = ['.mov', '.mp4', '.m4v']
     total_videos = 0
     compressed_videos = 0
     for file_name in os.listdir(source_dir):
@@ -25,7 +25,7 @@ def move_and_compress_videos(source_dir):
             destination_path = os.path.join(destination_dir, file_name)
             shutil.move(source_path, destination_path)
 
-    print(f"   [{total_videos}] videos moved 🚚 -to-> 'vids' folder.")
+    print(f"  [{total_videos}] videos founded 👁️🫦👁️ Let's compress them ↙︎")
 
     # Compress videos in the 'vids' folder and save in 'comp vids' folder
     for file_name in os.listdir(destination_dir):
@@ -45,12 +45,9 @@ def move_and_compress_videos(source_dir):
                 pass
         
 #        tqdm.write(f"[{compressed_videos}/{total_videos}] {file_name} compressed")
-        # replace last line when video is compressed
-#        tqdm.write(f"[{compressed_videos}/{total_videos}] {file_name} compressed", end="\r")
 
-
-    print("\n      💈All Videos Compressed💈")
+    print("\n      💈All Videos Were Compressed💈")
 
 if __name__ == "__main__":
-    source_directory = input("    💬 Path of your folder -> ")
+    source_directory = input("   💬 Path of your folder -> ")
     move_and_compress_videos(source_directory)

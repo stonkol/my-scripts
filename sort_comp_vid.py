@@ -1,6 +1,7 @@
 import os
 import shutil
 import subprocess
+from tqdm import tqdm
 
 def move_and_compress_videos(source_dir):
     # Set the destination and compressed directories
@@ -25,15 +26,20 @@ def move_and_compress_videos(source_dir):
 
     # Compress videos in the 'vids' folder and save in 'comp vids' folder
     for file_name in os.listdir(destination_dir):
+        if file_name.lower() == ".ds_store":
+            continue  # Skip .DS_Store files
+            
         source_path = os.path.join(destination_dir, file_name)
         compressed_path = os.path.join(compressed_dir, f"compressed_{file_name}")
 
         # Using ffmpeg to compress videos
-        # recommended libx264 -> 21~23 CRF
-        subprocess.run(["ffmpeg", "-i", source_path, "-vf", "scale=720:-2", "-c:v", "libx264", "-crf", "22", "-c:a", "aac", compressed_path])
+        command = ["ffmpeg", "-i", source_path, "-vf", "scale=720:-2", "-c:v", "libx264", "-crf", "23", "-c:a", "aac", compressed_path]
+        with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True) as p:
+            for line in tqdm(p.stdout, total=100, desc=f"Compressing {file_name}", unit=" frame"):
+                pass
 
-    print("Videos compressed successfully.")
+    print("📺 Compressed Successfully 🍳")
 
 if __name__ == "__main__":
-    source_directory = input("Enter the path of your folder: ")
+    source_directory = input("Path of your folder -> ")
     move_and_compress_videos(source_directory)

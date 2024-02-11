@@ -25,7 +25,7 @@ def move_and_compress_videos(source_dir):
             destination_path = os.path.join(destination_dir, file_name)
             shutil.move(source_path, destination_path)
 
-    print(f"    {total_videos}  videos founded 👁️🫦👁️ let's compress them ↓\n")
+    print(f"    {total_videos} videos founded 👁️🫦👁️ let's compress them ↓\n")
 
     # Compress videos in the 'vids' folder and save in 'comp vids' folder
     for file_name in os.listdir(destination_dir):
@@ -43,11 +43,9 @@ def move_and_compress_videos(source_dir):
         with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True) as p:
             for line in tqdm(p.stdout, total=100, desc=f"[{compressed_videos}/{total_videos}] Compressing {file_name}", unit=" frames"):
                 pass
-        
-#        tqdm.write(f"[{compressed_videos}/{total_videos}] {file_name} compressed")
 
-    print("\n      💈All Videos Were Compressed💈")
+    print("\n         🍔All Videos are now Hot and Compressed🍔")
 
 if __name__ == "__main__":
-    source_directory = input("   💬 Path of your folder -> ")
+    source_directory = input("    💬  Tell me the Path -> ")
     move_and_compress_videos(source_directory)

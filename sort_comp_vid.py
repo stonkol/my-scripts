@@ -37,11 +37,11 @@ def move_and_compress_videos(source_dir):
         # Using ffmpeg to compress videos
         output_file_name = f"{file_name}"  # New file name for compressed video
         output_path = os.path.join(compressed_dir, output_file_name)
-        command = ["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "22", "-c:a", "aac", output_path]
+        command = ["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "23", "-c:a", "aac", output_path]
         
         compressed_videos += 1
         with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True) as p:
-            for line in tqdm(p.stdout, total=100, desc=f"[{compressed_videos}/{total_videos}] Compressing {file_name}", unit=" frames"):
+            for line in tqdm(p.stdout, total=100, desc=f"[{compressed_videos}/{total_videos}] 🔥 {file_name}", unit=" frames"):
                 pass
 
     print("\n         🍔All Videos are now Hot and Compressed🍔")

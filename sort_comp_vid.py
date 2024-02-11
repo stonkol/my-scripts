@@ -29,7 +29,8 @@ def move_and_compress_videos(source_dir):
         compressed_path = os.path.join(compressed_dir, f"compressed_{file_name}")
 
         # Using ffmpeg to compress videos
-        subprocess.run(["ffmpeg", "-i", source_path, "-vf", "scale=-1:720", "-c:v", "libx264", "-crf", "23", "-c:a", "aac", compressed_path])
+        # recommended libx264 -> 21~23 CRF
+        subprocess.run(["ffmpeg", "-i", source_path, "-vf", "scale=720:-2", "-c:v", "libx264", "-crf", "22", "-c:a", "aac", compressed_path])
 
     print("Videos compressed successfully.")
 

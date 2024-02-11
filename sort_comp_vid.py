@@ -5,8 +5,8 @@ from tqdm import tqdm
 
 def move_and_compress_videos(source_dir):
     # Set the destination and compressed directories
-    destination_dir = os.path.join(source_dir, 'vids')
-    compressed_dir = os.path.join(source_dir, 'comp vids')
+    destination_dir = os.path.join(source_dir, '_vids')
+    compressed_dir = os.path.join(source_dir, '_comp_vids')
 
     # Create the 'vids' and 'comp vids' folders if they don't exist
     if not os.path.exists(destination_dir):
@@ -25,7 +25,7 @@ def move_and_compress_videos(source_dir):
             destination_path = os.path.join(destination_dir, file_name)
             shutil.move(source_path, destination_path)
 
-    print(f"  [{total_videos}] videos founded 👁️🫦👁️ Let's compress them ↙︎")
+    print(f"    {total_videos}  videos founded 👁️🫦👁️ let's compress them ↓\n")
 
     # Compress videos in the 'vids' folder and save in 'comp vids' folder
     for file_name in os.listdir(destination_dir):
@@ -37,7 +37,7 @@ def move_and_compress_videos(source_dir):
         # Using ffmpeg to compress videos
         output_file_name = f"{file_name}"  # New file name for compressed video
         output_path = os.path.join(compressed_dir, output_file_name)
-        command = ["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "23", "-c:a", "aac", output_path]
+        command = ["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "22", "-c:a", "aac", output_path]
         
         compressed_videos += 1
         with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True) as p:

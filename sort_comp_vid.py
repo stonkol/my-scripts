@@ -25,7 +25,7 @@ def move_and_compress_videos(source_dir):
             destination_path = os.path.join(destination_dir, file_name)
             shutil.move(source_path, destination_path)
 
-    print(f"{total_videos} videos moved 🚚 to 'vids' folder.")
+    print(f"[{total_videos}] videos moved 🚚 -to-> 'vids' folder.")
 
     # Compress videos in the 'vids' folder and save in 'comp vids' folder
     for file_name in os.listdir(destination_dir):
@@ -39,13 +39,16 @@ def move_and_compress_videos(source_dir):
         output_path = os.path.join(compressed_dir, output_file_name)
         command = ["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "23", "-c:a", "aac", output_path]
         with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True) as p:
-            for line in tqdm(p.stdout, total=100, desc=f"Compressing {file_name}", unit=" frame"):
+            for line in tqdm(p.stdout, total=100, desc=f"Compressing {file_name}", unit=" frames"):
                 pass
         compressed_videos += 1
         tqdm.write(f"[{compressed_videos}/{total_videos}] {file_name} compressed")
+        # replace last line when video is compressed
+#        tqdm.write(f"[{compressed_videos}/{total_videos}] {file_name} compressed", end="\r")
 
-    print("💈 All Videos Compressed 💈")
+
+    print("\n💈 All Videos Compressed 💈")
 
 if __name__ == "__main__":
-    source_directory = input("💬 Path of your folder -> ")
+    source_directory = input("    💬 Path of your folder -> ")
     move_and_compress_videos(source_directory)

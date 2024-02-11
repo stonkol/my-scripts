@@ -18,31 +18,12 @@ def move_videos(source_dir, destination_dir):
 
 def compress_videos(source_dir, destination_dir):
     # Compress videos in the 'vids' folder and save in 'comp vids' folder
-    compressed_videos_exist = False
-
     for file_name in os.listdir(destination_dir):
         source_path = os.path.join(destination_dir, file_name)
-        compressed_path = os.path.join(destination_dir, 'comp vids', f"compressed_{file_name}")
+        compressed_path = os.path.join(destination_dir, f"comp vids", f"compressed_{file_name}")
 
-        # Check if compressed video already exists
-        if not os.path.exists(compressed_path):
-            compressed_videos_exist = True
-            # Using ffmpeg to compress videos
-            subprocess.run(["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "23", "-c:a", "aac", compressed_path])
-
-    return compressed_videos_exist
-
-def remove_metadata_images(source_dir, delete_original=True):
-    # Remove metadata from images while preserving specific attributes
-    image_extensions = ['.jpg', '.jpeg', '.png']
-    for file_name in os.listdir(source_dir):
-        if any(file_name.lower().endswith(ext) for ext in image_extensions):
-            file_path = os.path.join(source_dir, file_name)
-            subprocess.run(["exiftool", "-all=", "-tagsFromFile", "@", "-exif:CreateDate", "-exif:ModifyDate", "-icc_profile", "-gps", "-filepermissions", "-rotation", file_path])
-
-            # Delete the original image if specified
-            if delete_original:
-                os.remove(file_path)
+        # Using ffmpeg to compress videos
+        subprocess.run(["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "23", "-c:a", "aac", compressed_path])
 
 def move_and_compress_videos(source_dir):
     # Set the destination and compressed directories
@@ -67,17 +48,10 @@ def move_and_compress_videos(source_dir):
 
     print("Video files moved to the video subfolder.")
 
-    # Check if compressed videos already exist
-    compressed_exist = compress_videos(source_dir, destination_dir)
+    # Compress videos in the 'vids' folder
+    compress_videos(source_dir, destination_dir)
 
-    if compressed_exist:
-        print("Some videos were already compressed in the 'comp vids' folder.")
-    else:
-        print("Videos compressed successfully.")
-
-    # Remove metadata from images and optionally delete the original images
-    remove_metadata_images(source_dir, delete_original=True)
-    print("Metadata removed from images and original images deleted successfully.")
+    print("Videos compressed successfully.")
 
 if __name__ == "__main__":
     source_directory = input("Enter the path of your folder: ")

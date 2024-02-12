@@ -1,3 +1,18 @@
+# WHAT IT IS ->
+
+# todo list:
+# [ ] check if has been succesfully compressed
+# [ ] calculate the videos that will be going to compressed from
+#     the video number in "vids" and not the videos moved to "vids"
+# [ ] if a video cource is missing show an error
+# [ ] if thepath didnt exidt show an error, instead of creating a wrong path
+# [ ] change the line print after a file has been commpressed
+# [ ] improve the progress bar, it often stucks visually, like 0% -> 72% and
+#     then ends at 82% and go to compresse the next file, it should end in 100%
+# [ ] progress bar shouldnt be stuck there after finished compressing that file
+# [ ] hide remaing and elapsed
+# [ ] hide '83/100' parameter in progress bar.
+
 import os
 import shutil
 import subprocess
@@ -37,13 +52,18 @@ def move_and_compress_videos(source_dir):
         # Using ffmpeg to compress videos
         output_file_name = f"{file_name}"  # New file name for compressed video
         output_path = os.path.join(compressed_dir, output_file_name)
-        command = ["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "23", "-c:a", "aac", output_path]
-        
+
+        ############## adjust ffmpeg parameters as nedded #################
+        # libx264 (encode), 18~24 is the common CRF par
+        command = ["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "21", "-c:a", "aac", output_path]
+        ####################################################################
+
         compressed_videos += 1
         with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True) as p:
             for line in tqdm(p.stdout, total=100, desc=f"[{compressed_videos}/{total_videos}] 🔥 {file_name}", unit=" frames"):
                 pass
 
+    # after finished
     print("\n         🍔All Videos are now Hot and Compressed🍔")
 
 if __name__ == "__main__":

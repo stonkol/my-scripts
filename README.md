@@ -1,3 +1,18 @@
+# my scripts
+
+### list
+
+- resolutions scaler : batch scale images without "blurring" them on macOS using 'pillow'
+
+- metadata remover with `exiftool`
+
+- sort all the videos in a folder and compress them with `ffmpeg`
+
+## todo list
+
+- [ ] script to remove files (pics+vids...) that are not in the new version of that folder
+
+
 # Metadata Removal (exiftool)
 1. Install exiftool `$ brew install exiftool`
 1. Create a new AppleScript Application
@@ -17,11 +32,11 @@
    - Check the box for "Enable Folder Actions" in the Folder Actions Setup window.
    - Drag the AppleScript application onto the right side of the Folder Actions Setup window, where it says "Attach folder action:"
    - Close the Folder Actions Setup window.
-  
+
 Now, any file you place into the smart folder should trigger the AppleScript, which will attempt to remove metadata using exiftool.
 
-> [!IMPORTANT] 
-> The effectiveness of this approach depends on the specific metadata you want to remove and the file types involved. Also, exiftool might not remove all types of metadata for all file formats. 
+> [!IMPORTANT]
+> The effectiveness of this approach depends on the specific metadata you want to remove and the file types involved. Also, exiftool might not remove all types of metadata for all file formats.
 
 ### List of metadata types that exiftool can handle:
 1. EXIF Data (Exchangeable image file format): Camera settings (aperture, shutter speed, ISO, etc.). Date and time information. GPS coordinates. Camera make and model. Software used for processing the image.

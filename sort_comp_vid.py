@@ -16,7 +16,6 @@
 import os
 import shutil
 import subprocess
-from tqdm import tqdm
 
 def move_and_compress_videos(source_dir):
     # Set the destination and compressed directories
@@ -40,7 +39,7 @@ def move_and_compress_videos(source_dir):
             destination_path = os.path.join(destination_dir, file_name)
             shutil.move(source_path, destination_path)
 
-    print(f"    {total_videos} videos founded 👁️🫦👁️ let's compress them ↓\n")
+    print(f"    {total_videos} videos found 👁️🫦👁️  Let's compress them!\n")
 
     # Compress videos in the 'vids' folder and save in 'comp vids' folder
     for file_name in os.listdir(destination_dir):
@@ -53,17 +52,25 @@ def move_and_compress_videos(source_dir):
         output_file_name = f"{file_name}"  # New file name for compressed video
         output_path = os.path.join(compressed_dir, output_file_name)
 
-        ############## adjust ffmpeg parameters as nedded #################
-        # libx264 (encode), 18~24 is the common CRF par
+        ############## adjust ffmpeg parameters as needed #################
+        # libx264 (encode), 18~24 is the common CRF parameter
         command = ["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "21", "-c:a", "aac", output_path]
         ####################################################################
 
         compressed_videos += 1
-        with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True) as p:
-            for line in tqdm(p.stdout, total=100, desc=f"[{compressed_videos}/{total_videos}] 🔥 {file_name}", unit=" frames"):
-                pass
+        print(f"    [{compressed_videos}/{total_videos}] 🔥 Compressing {file_name}...")
 
-    # after finished
+        try:
+            with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True) as p:
+                if p.stdout:
+                    for line in p.stdout:
+                        pass  # Process output line by line
+                else:
+                    print("No output from ffmpeg command.")
+        except Exception as e:
+            print(f"Error occurred while compressing {file_name}: {e}")
+
+    # After finished
     print("\n         🍔All Videos are now Hot and Compressed🍔")
 
 if __name__ == "__main__":

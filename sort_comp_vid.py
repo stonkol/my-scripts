@@ -39,7 +39,7 @@ def move_and_compress_videos(source_dir):
             destination_path = os.path.join(destination_dir, file_name)
             shutil.move(source_path, destination_path)
 
-    print(f"    {total_videos} videos found 👁️🫦👁️  Let's compress them!\n")
+    print(f"    {total_videos} videos found 👁️🫦👁️  Compressing!\n")
 
     # Compress videos in the 'vids' folder and save in 'comp vids' folder
     for file_name in os.listdir(destination_dir):
@@ -71,8 +71,8 @@ def move_and_compress_videos(source_dir):
             print(f"Error occurred while compressing {file_name}: {e}")
 
     # After finished
-    print("\n         🍔All Videos are now Hot and Compressed🍔")
+    print("\n    🍔All Videos are now Hot and Compressed🍔")
 
 if __name__ == "__main__":
-    source_directory = input("    💬  Tell me the Path -> ")
+    source_directory = input("    💬 Tell me the Path: ")
     move_and_compress_videos(source_directory)

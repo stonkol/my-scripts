@@ -1,2 +1,23 @@
 /private
-**/.DS_Store
+
+# macOS Finder metadata
+._*
+
+# User-specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VSCode directories
+.vscode/
+.history/
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Folder config file
+Desktop.ini

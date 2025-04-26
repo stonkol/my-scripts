@@ -1,6 +1,7 @@
-# install `pip3 install Pillow`, works better with PNG, if they are JPG:
-# `for file in *.jpg; do sips -s format png "$file" --out "${file%.jpg}.png"; done` #using sips(a command-line tool that is included with macOS) 
 # WHAT IS: batch scale images without "blurring" them on macOS using 'pillow'
+###############################
+# install `pip3 install Pillow`, works better with PNG
+# `for file in *.jpg; do sips -s format png "$file" --out "${file%.jpg}.png"; done` #using sips(a command-line tool that is included with macOS)
 
 from PIL import Image
 import os
@@ -19,7 +20,7 @@ def batch_resize(input_folder, output_folder, scale_factor):
             image = Image.open(input_path)
 
             # Calculate the new size
-            new_size = (image.width * scale_factor, image.height * scale_factor)
+            new_size = (int(image.width * scale_factor), int(image.height * scale_factor))
 
             # Resize using nearest-neighbor resampling
             resized_image = image.resize(new_size, Image.NEAREST)
@@ -33,4 +34,3 @@ if __name__ == "__main__":
     scale_factor = 16  # Adjust the scale factor as needed
 
     batch_resize(input_folder, output_folder, scale_factor)
-

@@ -1,20 +1,42 @@
 # my scripts
 
-## list
+## The Scripts
 
-1. **Batch Media Compressor**: sort all the videos in a folder and compress them with `ffmpeg`.
+1. **Batch Media Compressor**: sort all the videos in a folder and compress them with `ffmpeg`. For inf
+
+1. **Batch Upscaler**: batch scale images without "blurring" them on macOS using 'pillow'
 
 1. **Metadata Remover**: using `exiftool`
-
-1. **Resolution Scaler**: batch scale images without "blurring" them on macOS using 'pillow'
 
 1. **Weather CLI Tool**: written in Go, using data from [weather api](www.weatherapi.com).
 
 ## todo list
 
 - [ ] script to remove files (pics+vids...) that are not in the new version of that folder
+- [ ] batch scale pixelart `.py` -> `.go`
+- [ ] implement features of `weather-cli-learn` into weather `go.main`
+
+## Batch Upscaler
+
+Install ImageMagick on Mac:
+In terminal enter `$ brew install imagemagick`
+
+## Batch Upscaling with ImageMagick:
+Assuming your images are in a directory named input and you want to save the upscaled images to a directory named output, you can use the following command:
+`$ mogrify -path output -resize 1600x1600 -filter point -type TrueColor input/*.png`
+
+> [!WARNING]
+> The `mogrify` command modifies the input images in place.
+> If you want to keep the original images, consider copying them to a new directory before running the command.
+
+1. `path output`: Specifies the output directory where the upscaled images will be saved.
+1. `resize 1600x1600`: Sets the maximum size to which the images will be resized. You can adjust these values based on your specific requirements.
+1. `filter point`: Specifies the nearest-neighbor interpolation method, which maintains the pixelated appearance.
+1. `type TrueColor`: Ensures that the output images are in TrueColor format.
+input/*.png: Specifies the input directory and the type of files to be processed (in this case, all PNG files).
 
 ## Metadata Remover: (exiftool)
+
 1. Install exiftool `$ brew install exiftool`
 1. Create a new AppleScript Application
    - In Script Editor paste this [Exiftool-remove-metadata.scpt](https://github.com/stonkol/my-scripts/blob/main/Exiftool-remove-metadata.scpt)

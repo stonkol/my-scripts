@@ -1,4 +1,5 @@
 ## Install ImageMagick on Mac:
+
 In terminal enter `$ brew install imagemagick`
 
 ## Batch Upscaling with ImageMagick:

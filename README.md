@@ -1,19 +1,20 @@
 # my scripts
 
-### list
+## list
 
-- resolutions scaler : batch scale images without "blurring" them on macOS using 'pillow'
+1. **Batch Media Compressor**: sort all the videos in a folder and compress them with `ffmpeg`.
 
-- metadata remover with `exiftool`
+1. **Metadata Remover**: using `exiftool`
 
-- sort all the videos in a folder and compress them with `ffmpeg`
+1. **Resolution Scaler**: batch scale images without "blurring" them on macOS using 'pillow'
+
+1. **Weather CLI Tool**: written in Go, using data from [weather api](www.weatherapi.com).
 
 ## todo list
 
 - [ ] script to remove files (pics+vids...) that are not in the new version of that folder
 
-
-# Metadata Removal (exiftool)
+## Metadata Remover: (exiftool)
 1. Install exiftool `$ brew install exiftool`
 1. Create a new AppleScript Application
    - In Script Editor paste this [Exiftool-remove-metadata.scpt](https://github.com/stonkol/my-scripts/blob/main/Exiftool-remove-metadata.scpt)
@@ -39,6 +40,7 @@ Now, any file you place into the smart folder should trigger the AppleScript, wh
 > The effectiveness of this approach depends on the specific metadata you want to remove and the file types involved. Also, exiftool might not remove all types of metadata for all file formats.
 
 ### List of metadata types that exiftool can handle:
+
 1. EXIF Data (Exchangeable image file format): Camera settings (aperture, shutter speed, ISO, etc.). Date and time information. GPS coordinates. Camera make and model. Software used for processing the image.
 1. IPTC Data (International Press Telecommunications Council): Caption and description. Keywords. Object name. By-line (photographer's name).
 1. XMP Data (Extensible Metadata Platform): Extensible metadata in XML format. Often includes information similar to EXIF and IPTC.

@@ -1,4 +1,4 @@
-module cobra-cli
+module cobra-cli-test
 
 go 1.24.2
 

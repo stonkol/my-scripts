@@ -1,9 +1,10 @@
 /*
 Copyright © 2025 NAME HERE <EMAIL ADDRESS>
+
 */
 package main
 
-import "cobra-cli/cmd"
+import "cobra-cli-test/cmd"
 
 func main() {
 	cmd.Execute()

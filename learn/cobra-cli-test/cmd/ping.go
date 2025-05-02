@@ -1,8 +1,7 @@
 /*
 Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
 */
-package cmd
+package net
 
 import (
 	"fmt"
@@ -26,9 +25,10 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	rootCmd.AddCommand(pingCmd)
 
 	// Here you will define your flags and configuration settings.
+
+	NetCmd.AddCommand(pingCmd)
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:

@@ -41,10 +41,11 @@ go install github.com/spf13/cobra-cli@latest
 
 ### Initialize in your project
 
-Init in the folder where you want it to be created
+Init the cobra prj
 
 ```sh
-cobra-cli init [folder_name]
+go mod init [username/projectName]
+cobra-cli init
 ```
 
 It will create a folder with the `folder_name` with this layout:

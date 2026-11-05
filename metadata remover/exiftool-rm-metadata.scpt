@@ -4,7 +4,8 @@ on run {input, parameters}
         set fileType to do shell script "file -b -- " & quoted form of posixPath
 
         if fileType contains "PDF" or fileType contains "JPEG" or fileType contains "PNG" or fileType contains "ISO Media" then
-            do shell script "exiftool -all= " & quoted form of posixPath
+            -- Remove metadata in place and do not leave an _original copy.
+            do shell script "exiftool -overwrite_original -all= " & quoted form of posixPath
         else
             display dialog "Unsupported file type: " & fileType
         end if

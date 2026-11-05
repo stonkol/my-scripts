@@ -1,19 +1,25 @@
-# install `pip install pixelart-scaler`, works better with PNG, if they are JPG:
-# `for file in *.jpg; do convert "$file" "${file%.jpg}.png"; done`
-# WHAT IS: batch scale images without "blurring" them on Linux using 'pixelart-scaler'
-#!/bin/bash
+#!/usr/bin/env bash
+# Install with: python3 -m pip install pixelart-scaler
+set -euo pipefail
 
-input_dir="path/to/your/input/directory" #replace to your path
-output_dir="path/to/your/output/directory" #replace to your path
-scale_factor=16  # Adjust as needed
+input_dir="path/to/your/input/directory" # replace with your path
+output_dir="path/to/your/output/directory" # replace with your path
+scale_factor=16
 
-for file in "$input_dir"/*.png; do
+if [[ ! -d "$input_dir" ]]; then
+    echo "Input directory does not exist: $input_dir" >&2
+    exit 1
+fi
+mkdir -p "$output_dir"
+shopt -s nullglob
+files=("$input_dir"/*.png)
+if ((${#files[@]} == 0)); then
+    echo "No PNG files found in $input_dir"
+    exit 0
+fi
+
+for file in "${files[@]}"; do
     filename=$(basename "$file")
     output_file="$output_dir/${filename%.*}_scaled.png"
-    pixelart-scaler "$file" "$output_file" --scale-factor $scale_factor
+    pixelart-scaler "$file" "$output_file" --scale-factor "$scale_factor"
 done
-
-# After saving this file...
-# In the Terminal navigate to your script directory. 
-# Run this to make the script executable: `batch_scale_pixelart-scaler_linux.sh`
-# Execute the script: `./batch_scale_pixelart-scaler_linux.sh`

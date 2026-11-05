@@ -18,6 +18,8 @@ import shutil
 import subprocess
 
 def move_and_compress_videos(source_dir):
+    if not os.path.isdir(source_dir):
+        raise NotADirectoryError(source_dir)
     # Set the destination and compressed directories
     destination_dir = os.path.join(source_dir, '_vids')
     compressed_dir = os.path.join(source_dir, '_comp_vids')
@@ -29,49 +31,47 @@ def move_and_compress_videos(source_dir):
         os.makedirs(compressed_dir)
 
     # Move video files to the destination folder if not already there
-    video_extensions = ['.mov', '.mp4', '.m4v']
-    total_videos = 0
-    compressed_videos = 0
+    video_extensions = ('.mov', '.mp4', '.m4v')
     for file_name in os.listdir(source_dir):
-        if any(file_name.lower().endswith(ext) for ext in video_extensions):
-            total_videos += 1
-            source_path = os.path.join(source_dir, file_name)
+        source_path = os.path.join(source_dir, file_name)
+        if os.path.isfile(source_path) and file_name.lower().endswith(video_extensions):
             destination_path = os.path.join(destination_dir, file_name)
             shutil.move(source_path, destination_path)
 
+    files_to_compress = [name for name in os.listdir(destination_dir)
+                         if os.path.isfile(os.path.join(destination_dir, name))
+                         and name.lower().endswith(video_extensions)]
+    total_videos = len(files_to_compress)
     print(f"    {total_videos} videos found 👁️🫦👁️  Compressing!\n")
+    compressed_videos = 0
 
-    # Compress videos in the 'vids' folder and save in 'comp vids' folder
-    for file_name in os.listdir(destination_dir):
-        if file_name.lower() == ".ds_store":
-            continue  # Skip .DS_Store files
+    for file_name in files_to_compress:
         source_path = os.path.join(destination_dir, file_name)
-        compressed_path = os.path.join(compressed_dir, file_name)
-
-        # Using ffmpeg to compress videos
-        output_file_name = f"{file_name}"  # New file name for compressed video
-        output_path = os.path.join(compressed_dir, output_file_name)
+        stem, _extension = os.path.splitext(file_name)
+        output_path = os.path.join(compressed_dir, f"{stem}_compressed.mp4")
 
         ############## adjust ffmpeg parameters as needed #################
         # libx264 (encode), 18~24 is the common CRF parameter
-        command = ["ffmpeg", "-i", source_path, "-c:v", "libx264", "-crf", "21", "-c:a", "aac", output_path]
+        command = ["ffmpeg", "-y", "-i", source_path, "-c:v", "libx264", "-crf", "21", "-c:a", "aac", output_path]
         ####################################################################
 
-        compressed_videos += 1
-        print(f"    [{compressed_videos}/{total_videos}] 🔥 Compressing {file_name}...")
+        print(f"    [{compressed_videos + 1}/{total_videos}] 🔥 Compressing {file_name}...")
 
         try:
-            with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True) as p:
-                if p.stdout:
-                    for line in p.stdout:
-                        pass  # Process output line by line
-                else:
-                    print("No output from ffmpeg command.")
+            result = subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+                                    text=True, check=False)
+            if result.returncode == 0 and os.path.isfile(output_path) and os.path.getsize(output_path) > 0:
+                compressed_videos += 1
+                print(f"    Finished: {output_path}")
+            else:
+                print(f"    Failed to compress {file_name}: {result.stderr.strip()}")
+                if os.path.exists(output_path) and os.path.getsize(output_path) == 0:
+                    os.remove(output_path)
         except Exception as e:
             print(f"Error occurred while compressing {file_name}: {e}")
 
     # After finished
-    print("\n    🍔All Videos are now Hot and Compressed🍔")
+    print(f"\n    🍔Compressed {compressed_videos} of {total_videos} videos🍔")
 
 if __name__ == "__main__":
     source_directory = input("    💬 Tell me the Path: ")
